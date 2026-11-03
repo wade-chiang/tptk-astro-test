@@ -1,0 +1,14 @@
+---
+import { servicesData as services } from '../lib/data';
+const tags = (s: string) => s.split(/[、，,]/).map((t) => t.trim()).filter(Boolean);
+---
+<div class="grid cols-3">
+  {services.map((s) => (
+    <article class="card service">
+      <h3>{s.name}</h3>
+      <ul class="tags">
+        {tags(s.content).map((t) => <li>{t}</li>)}
+      </ul>
+    </article>
+  ))}
+</div>

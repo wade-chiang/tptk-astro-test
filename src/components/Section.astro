@@ -1,0 +1,13 @@
+---
+interface Props { title: string; en?: string; id?: string; tone?: 'plain' | 'soft'; narrow?: boolean }
+const { title, en, id, tone = 'plain', narrow = false } = Astro.props;
+---
+<section id={id} class:list={['section', tone]}>
+  <div class:list={['container', { narrow }]}>
+    <h2 class="section-title">
+      {en && <span class="en">{en}</span>}
+      <span class="zh">{title}</span>
+    </h2>
+    <slot />
+  </div>
+</section>

@@ -1,0 +1,22 @@
+---
+import Base from '../../layouts/Base.astro';
+import Section from '../../components/Section.astro';
+import { getPosts, postUrl, postDate } from '../../lib/site';
+const posts = await getPosts();
+---
+<Base title="專業文章">
+  <Section title="專業文章" en="COLUMN">
+    <div class="grid cols-3">
+      {posts.map((p) => (
+        <a class="card post" href={postUrl(p)}>
+          <img src={p.data.image} alt="" loading="lazy" />
+          <div class="body">
+            <time>{postDate(p)}</time>
+            <h3>{p.data.title}</h3>
+            <p>{p.data.description ?? ''}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+  </Section>
+</Base>

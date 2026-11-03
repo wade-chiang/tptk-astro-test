@@ -1,0 +1,26 @@
+---
+import { render } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import { getPosts, postUrl, postDate } from '../../../lib/site';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((post) => {
+    const [, year, month, slug] = postUrl(post).split('/');
+    return { params: { year, month, slug }, props: { post } };
+  });
+}
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+<Base title={post.data.title} description={post.data.description} image={post.data.image} type="article">
+  <article class="section">
+    <div class="container narrow">
+      <p class="crumb"><a href="/blog/">← 專業文章</a></p>
+      <h1 class="post-title">{post.data.title}</h1>
+      <p class="meta"><time>{postDate(post)}</time> · {post.data.author}</p>
+      <img class="cover" src={post.data.image} alt="" />
+      <div class="prose"><Content /></div>
+    </div>
+  </article>
+</Base>

@@ -1,0 +1,69 @@
+# 治療團隊：順序就是頁面上的順序
+# items 是資歷清單，一行一項（不需要 ‧ 符號）
+# 暫時不顯示某人：整段前面加 # 註解掉
+
+- name: 李宜蓁
+  image: https://img.tptk.com.tw/team-01.webp
+  title: 物理治療師
+  items:
+    - 台大物理治療碩士
+    - 永安骨科診所 - 物理治療師
+    - 安安物理治療所 - 長照 2.0 居家復能組長
+    - 台北市家庭顧者支持中心 - 特約物理治療師
+    - 台北市合宜、第一輔具中心 - 輔具評估人員
+- name: 劉偉成
+  image: https://img.tptk.com.tw/team-02.webp
+  title: 物理治療師
+  items:
+    - 2017年世大運場邊防護
+    - 2019年INAS世界運動會 隨隊治療師
+    - 2021年成都世大運 隨隊治療師
+    - 106、108、110、112年全國運動會 隨隊治療師
+    - 109年全民運動會 隨隊治療師
+    - EMT-1 初級救護員合格證書
+    - 中華民國殘障體育運動總會 游泳A級教練證
+    - Dynamic Taping Level 1 國際認證
+    - Easy Flossband Level 1 + 2 國際認證
+    - Redcord Active Intro 國際認證
+    - CKC 臨床壺鈴教練 Level 1 國際認證
+- name: 曾葳
+  image: https://img.tptk.com.tw/team-03.webp
+  title: 物理治療師
+  items:
+    - 台大神經物理治療碩士
+    - 長照 2.0 居家復能 物理治療師
+    - 日照、失智據點團體治療
+- name: 李哲慶
+  image: https://img.tptk.com.tw/team-04.webp
+  title: 物理治療師
+  items:
+    - 康健復健科診所 物理治療師
+    - 長照 2.0 居家復能 物理治療師
+    - 虛弱老人物理治療
+    - 中風後遺症物理治療
+    - 2017年台北世大運場邊防護
+    - 運動肌內效貼布貼紮認證
+- name: 侯毅農
+  image: https://img.tptk.com.tw/team-05.webp
+  title: 物理治療師
+  items:
+    - 永安骨科診所、康健復健科診所
+    - 北醫、仁愛醫院 阿茲海默症銀髮族團體運動指導教師
+    - 失能銀髮族雲端照護平台 到宅物理治療師
+    - 111、112年度全中運隨隊治療師
+    - 台北市輔具中心評估人員
+- name: 劉紫梅
+  image: https://img.tptk.com.tw/team-08.webp
+  title: 物理治療師
+  items:
+    - 康健診所 物理治療師
+    - 兒童動作發展物理治療
+    - 中風後遺症物理治療
+- name: 李佳叡
+  image: https://img.tptk.com.tw/team-09.webp
+  title: 物理治療師
+  items:
+    - 台大六年制物理治療學士DPT
+    - 大專籃球男子公開一級 隨隊物理治療師
+    - 2025年世壯運場邊防護
+    - EMT-1 初級救護技術員合格證書

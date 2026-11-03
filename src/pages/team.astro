@@ -1,0 +1,21 @@
+---
+import Base from '../layouts/Base.astro';
+import Section from '../components/Section.astro';
+import { teamData as team } from '../lib/data';
+---
+<Base title="治療團隊">
+  <Section title="我們的治療團隊" en="TEAM">
+    <div class="grid cols-3">
+      {team.map((m) => (
+        <article class="card member">
+          <img src={m.image} alt={m.name} loading="lazy" />
+          <div class="body">
+            <h3>{m.name}</h3>
+            <p class="role">{m.title}</p>
+            <ul>{m.items.map((i) => <li>{i}</li>)}</ul>
+          </div>
+        </article>
+      ))}
+    </div>
+  </Section>
+</Base>

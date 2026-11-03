@@ -1,0 +1,11 @@
+---
+import { site } from '../lib/site';
+---
+<footer class="site-footer">
+  <p class="social">
+    <a href={site.facebook} target="_blank" rel="noopener">Facebook</a>
+    <a href={site.youtube} target="_blank" rel="noopener">YouTube</a>
+  </p>
+  <p>{site.address}　·　<a href={site.phoneHref}>{site.phone}</a>　·　<a href={`mailto:${site.email}`}>{site.email}</a></p>
+  <p class="muted">© {new Date().getFullYear()} {site.name}</p>
+</footer>

@@ -1,0 +1,13 @@
+# 首頁橫幅
+
+# 圓形主視覺輪播的照片，依序自動切換（至少一張）
+slides:
+  - https://img.tptk.com.tw/banner-bg01.webp
+  - https://img.tptk.com.tw/interspace03.webp
+  - https://img.tptk.com.tw/interspace05.webp
+  - https://img.tptk.com.tw/therapy001.webp
+title: 來厝邊，當自己身體的頭家
+content: 在純樸的鄉下，老闆會叫客人「頭家」，客人會叫老闆「頭家」，太太也會叫先生「頭家」，「頭家」這個詞代表你與我緊密的連結，真心的希望厝邊好友們都能健康平安，歡迎頭家們來厝邊走走
+button:
+  label: 探訪厝邊
+  link: "#about"

@@ -1,0 +1,86 @@
+---
+import Section from './Section.astro';
+import { site } from '../lib/site';
+const slots = [];
+for (let m = 10 * 60; m <= 21 * 60; m += 30) {
+  const h = Math.floor(m / 60), mm = String(m % 60).padStart(2, '0');
+  slots.push(`${h > 12 ? h - 12 : h}:${mm} ${h >= 12 ? 'PM' : 'AM'}`);
+}
+const today = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Taipei' }).format(new Date());
+---
+<Section id="contact" title="預約及聯絡資訊" en="CONTACT" tone="soft">
+  <p class="lead">歡迎透過我們的網站填表詢問，或是直接來電諮詢，本所採預約制，但也歡迎您路過進來與我們聊聊</p>
+  <div class="contact-grid">
+    <div>
+      <ul class="info">
+        <li><strong>{site.name}</strong></li>
+        <li>地址：{site.address}</li>
+        <li>電話：<a href={site.phoneHref}>{site.phone}</a></li>
+        <li>Email：<a href={`mailto:${site.email}`}>{site.email}</a></li>
+      </ul>
+      <iframe
+        class="map" title="厝邊頭家物理治療所地圖" loading="lazy"
+        src={`https://maps.google.com/maps?q=${site.lat},${site.lng}&z=17&output=embed`}
+        referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+    <form id="contact-form" action={site.formAction} method="post">
+      <label>您的稱呼（必填）<input name="name" required pattern="[一-龥_a-zA-Z ]{2,10}" /></label>
+      <label>E-Mail<input name="email" type="email" /></label>
+      <label>聯絡電話（必填）<input name="phone" type="tel" required pattern="0[0-9]{8,9}" inputmode="tel" /></label>
+      <div class="row2">
+        <label>想預約的日期<input name="date_input" type="date" min={today} /></label>
+        <label>想預約的時段
+          <select name="time">
+            <option value="">請選擇</option>
+            {slots.map((s) => <option value={s}>{s}</option>)}
+          </select>
+        </label>
+      </div>
+      <label>主要期望處理症狀<input name="subject" /></label>
+      <label>簡述概況以及其他需留意之病史（必填）<textarea name="message" rows="5" required></textarea></label>
+      <button type="submit" class="btn">送出</button>
+      <p id="form-status" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</Section>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('#contact-form');
+  const status = document.querySelector<HTMLElement>('#form-status');
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = form.querySelector('button')!;
+    const data = Object.fromEntries(new FormData(form).entries()) as Record<string, string>;
+    // The API expects date as "yyyy 年 mm 月 dd 日" plus date_submit as "yyyy/mm/dd" (what pickadate used to send).
+    const iso = data.date_input;
+    delete data.date_input;
+    if (iso) {
+      const [y, m, d] = iso.split('-');
+      data.date = `${y} 年 ${m} 月 ${d} 日`;
+      data.date_submit = `${y}/${m}/${d}`;
+    } else {
+      data.date = '';
+    }
+    btn.disabled = true;
+    status!.className = '';
+    status!.textContent = '預約送出中…';
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      const json = await res.json();
+      if (json.result !== 'success') throw new Error('api');
+      form.reset();
+      status!.className = 'ok';
+      status!.textContent =
+        '預約成功！我們將與您電話聯絡，確認預約時段以及診斷、照會、醫囑等事宜，再請留意來電 (02)25372293 或 0930906201，謝謝！';
+    } catch {
+      status!.className = 'err';
+      status!.textContent = '喔…送出失敗。不好意思，請再試一次，也可以直接聯絡我們。';
+    } finally {
+      btn.disabled = false;
+    }
+  });
+</script>

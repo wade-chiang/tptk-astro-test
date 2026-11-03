@@ -1,0 +1,58 @@
+# 圖片集：category 相同的會歸在同一個篩選分類
+# note 可省略
+
+- name: 本所招牌
+  image: https://img.tptk.com.tw/interspace01.webp
+  category: 所內空間
+- name: 室內空間一隅
+  image: https://img.tptk.com.tw/interspace02.webp
+  category: 所內空間
+- name: 候診區
+  image: https://img.tptk.com.tw/interspace03.webp
+  category: 所內空間
+- name: 候診區一隅
+  image: https://img.tptk.com.tw/interspace04.webp
+  category: 所內空間
+  note: 最佳職人獎
+- name: 運動治療空間
+  image: https://img.tptk.com.tw/interspace05.webp
+  category: 所內空間
+- name: 治療床
+  image: https://img.tptk.com.tw/interspace06.webp
+  category: 所內空間
+- name: 服務剪影
+  image: https://img.tptk.com.tw/therapy001.webp
+  category: 服務剪影
+- name: 服務剪影
+  image: https://img.tptk.com.tw/therapy002.webp
+  category: 服務剪影
+- name: 服務剪影
+  image: https://img.tptk.com.tw/therapy003.webp
+  category: 服務剪影
+- name: 服務剪影
+  image: https://img.tptk.com.tw/therapy004.webp
+  category: 服務剪影
+- name: 服務剪影
+  image: https://img.tptk.com.tw/therapy005.webp
+  category: 服務剪影
+- name: 居家復能
+  image: https://img.tptk.com.tw/neuralDamage001.webp
+  category: 居家復能
+- name: 居家復能
+  image: https://img.tptk.com.tw/neuralDamage002.webp
+  category: 居家復能
+- name: 居家復能
+  image: https://img.tptk.com.tw/neuralDamage003.webp
+  category: 居家復能
+- name: Sound system
+  image: https://img.tptk.com.tw/sport003.webp
+  category: 場邊服務
+- name: Sound system
+  image: https://img.tptk.com.tw/sport001.webp
+  category: 場邊服務
+- name: Sound system
+  image: https://img.tptk.com.tw/sport002.webp
+  category: 場邊服務
+- name: Sound system
+  image: https://img.tptk.com.tw/sport004.webp
+  category: 場邊服務

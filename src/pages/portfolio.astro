@@ -1,0 +1,87 @@
+---
+import Base from '../layouts/Base.astro';
+import Section from '../components/Section.astro';
+import { portfolioData as items } from '../lib/data';
+const cats = [...new Set(items.map((i) => i.category))];
+---
+<Base title="圖片集">
+  <Section title="圖片集" en="GALLERY">
+    <div class="filters" role="group" aria-label="分類">
+      <button class="chip active" data-cat="">全部</button>
+      {cats.map((c) => <button class="chip" data-cat={c}>{c}</button>)}
+    </div>
+    <div class="gallery">
+      {items.map((i) => (
+        <figure data-cat={i.category}>
+          <button type="button" class="thumb" data-src={i.image} data-caption={i.name} aria-label={`放大：${i.name}`}>
+            <img src={i.image} alt={i.name} loading="lazy" />
+          </button>
+          <figcaption>{i.name}{i.note ? `（${i.note}）` : ''}</figcaption>
+        </figure>
+      ))}
+    </div>
+    <dialog id="lightbox" aria-label="圖片檢視">
+      <button class="lb-btn lb-close" aria-label="關閉">✕</button>
+      <button class="lb-btn lb-prev" aria-label="上一張">‹</button>
+      <button class="lb-btn lb-next" aria-label="下一張">›</button>
+      <div class="lb-stage"><img alt="" /><p></p></div>
+    </dialog>
+  </Section>
+</Base>
+
+<script>
+  const figs = [...document.querySelectorAll<HTMLElement>('.gallery figure')];
+  document.querySelectorAll<HTMLButtonElement>('.chip').forEach((chip) =>
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('.chip').forEach((c) => c.classList.toggle('active', c === chip));
+      const cat = chip.dataset.cat;
+      figs.forEach((f) => (f.hidden = !!cat && f.dataset.cat !== cat));
+    }),
+  );
+  const box = document.querySelector<HTMLDialogElement>('#lightbox')!;
+  const img = box.querySelector<HTMLImageElement>('.lb-stage img')!;
+  const cap = box.querySelector<HTMLElement>('.lb-stage p')!;
+  const thumbs = [...document.querySelectorAll<HTMLButtonElement>('.thumb')];
+  const visible = () => thumbs.filter((t) => !t.closest('figure')!.hidden);
+  let cur = 0;
+  const cache = new Map<string, HTMLImageElement>();
+  const preload = (src: string) => {
+    if (!cache.has(src)) { const i = new Image(); i.src = src; cache.set(src, i); }
+  };
+  function show(list: HTMLButtonElement[], idx: number) {
+    cur = (idx + list.length) % list.length;
+    const t = list[cur];
+    img.classList.remove('ready');
+    cap.textContent = t.dataset.caption!;
+    img.alt = t.dataset.caption!;
+    img.src = t.dataset.src!;
+    const done = () => img.classList.add('ready');
+    img.decode().then(done, done);
+    preload(list[(cur + 1) % list.length].dataset.src!);
+    preload(list[(cur - 1 + list.length) % list.length].dataset.src!);
+  }
+  thumbs.forEach((t) => {
+    t.addEventListener('pointerenter', () => preload(t.dataset.src!), { once: true });
+    t.addEventListener('click', () => {
+      const list = visible();
+      box.showModal();
+      show(list, list.indexOf(t));
+    });
+  });
+  const step = (d: number) => show(visible(), cur + d);
+  box.querySelector('.lb-prev')!.addEventListener('click', () => step(-1));
+  box.querySelector('.lb-next')!.addEventListener('click', () => step(1));
+  const close = () => box.close();
+  box.querySelector('.lb-close')!.addEventListener('click', close);
+  box.addEventListener('click', (e) => { if (e.target === box || e.target === box.querySelector('.lb-stage')) close(); });
+  box.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') step(-1);
+    if (e.key === 'ArrowRight') step(1);
+  });
+  let x0 = 0;
+  box.addEventListener('touchstart', (e) => (x0 = e.touches[0].clientX), { passive: true });
+  box.addEventListener('touchend', (e) => {
+    const dx = e.changedTouches[0].clientX - x0;
+    if (Math.abs(dx) > 50) step(dx < 0 ? 1 : -1);
+  });
+</script>

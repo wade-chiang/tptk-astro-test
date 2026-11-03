@@ -1,0 +1,21 @@
+---
+import { site } from '../lib/site';
+const path = Astro.url.pathname;
+const items = [{ label: '首頁', href: '/' }, ...site.nav, { label: '立即預約', href: site.bookingHref }];
+---
+<header class="site-header">
+  <a href="/" class="brand" aria-label={site.name}><img src={site.logo} alt={site.name} height="44" /></a>
+  <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="開啟選單" />
+  <label for="nav-toggle" class="burger" aria-hidden="true"><span></span></label>
+  <nav aria-label="主選單">
+    <ul>
+      {items.map((i) => (
+        <li><a href={i.href} aria-current={path === i.href ? 'page' : undefined}>{i.label}</a></li>
+      ))}
+    </ul>
+  </nav>
+  <div class="side-tel">
+    <span>電話預約・諮詢</span>
+    <a href={site.phoneHref}>{site.phone}</a>
+  </div>
+</header>

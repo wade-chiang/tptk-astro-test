@@ -1,0 +1,21 @@
+---
+import Base from '../layouts/Base.astro';
+import Section from '../components/Section.astro';
+import { youtubeData as videos } from '../lib/data';
+import { site } from '../lib/site';
+---
+<Base title="YouTube頻道">
+  <Section title="YouTube 頻道" en="YOUTUBE">
+    <div class="grid cols-2">
+      {videos.map((v) => (
+        <figure class="card video">
+          <iframe
+            src={`https://www.youtube.com/embed/${v.id}`} title={v.title} loading="lazy"
+            allow="accelerometer; clipboard-write; encrypted-media; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          <figcaption>{v.title}</figcaption>
+        </figure>
+      ))}
+    </div>
+    <p class="center"><a class="btn" href={site.youtube} target="_blank" rel="noopener">前往頻道</a></p>
+  </Section>
+</Base>

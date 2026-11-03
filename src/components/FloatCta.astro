@@ -1,0 +1,23 @@
+---
+import { site } from '../lib/site';
+---
+<div class="float-cta">
+  <a class="fc-tel" href={site.phoneHref}><span>電話預約</span><strong>02-2537-2293</strong></a>
+  <a class="fc-book" href={site.bookingHref}><span>線上預約</span><small>RESERVE</small></a>
+</div>
+
+<script>
+  // Tuck the buttons away while the booking form is on screen, so they never cover the fields.
+  const box = document.querySelector<HTMLElement>('.float-cta');
+  const contact = document.querySelector('#contact');
+  if (box && contact) {
+    const update = () => {
+      const r = contact.getBoundingClientRect();
+      const visible = Math.min(r.bottom, innerHeight) - Math.max(r.top, 0);
+      box.classList.toggle('away', visible > innerHeight * 0.25);
+    };
+    addEventListener('scroll', update, { passive: true });
+    addEventListener('resize', update);
+    update();
+  }
+</script>

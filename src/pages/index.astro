@@ -1,0 +1,95 @@
+---
+import Base from '../layouts/Base.astro';
+import Section from '../components/Section.astro';
+import ServiceGrid from '../components/ServiceGrid.astro';
+import Contact from '../components/Contact.astro';
+import { getPosts, postUrl, postDate } from '../lib/site';
+import { bannerData as banner, newsData as news, aboutData as about, testimonialsData as testimonials } from '../lib/data';
+
+const posts = (await getPosts()).slice(0, 3);
+---
+<Base>
+  <section class="hero" data-slides={banner.slides.length}>
+    <div class="hero-visual">
+      <div class="hero-circle">
+        {banner.slides.map((src, i) => (
+          <img src={src} alt="" class:list={{ active: i === 0 }} loading={i === 0 ? 'eager' : 'lazy'} />
+        ))}
+      </div>
+      <div class="hero-count" aria-hidden="true"><b>1</b><i></i><span>{banner.slides.length}</span></div>
+    </div>
+    <h1 class="hero-copy">{banner.title}</h1>
+    <p class="hero-en" aria-hidden="true">COME TO TSHU-PINN, BE THE BOSS OF YOUR OWN BODY.</p>
+  </section>
+
+  <section class="section intro">
+    <div class="container narrow">
+      <div class="card welcome">
+        <p>{banner.content}</p>
+        <a class="btn" href={banner.button.link}>{banner.button.label}</a>
+      </div>
+    </div>
+  </section>
+
+  <Section title="最新消息" en="NEWS" id="news" narrow>
+    <ul class="news">
+      {news.map((n) => <li><time>{n.date}</time><span>{n.content}</span></li>)}
+    </ul>
+  </Section>
+
+  <Section title={about.title} en="ABOUT" id="about" tone="soft" narrow>
+    {about.paragraphs.map((p) => <p class="prose-p">{p}</p>)}
+    <p class="more"><a class="btn" href="/services/">看看我們的服務</a></p>
+  </Section>
+
+  <Section title="服務項目" en="SERVICE" id="services">
+    <ServiceGrid />
+  </Section>
+
+  <Section title="病友回饋" en="VOICE" tone="soft">
+    <div class="grid cols-2">
+      {testimonials.map((t) => (
+        <figure class="card quote">
+          <blockquote>{t.paragraphs.map((p) => <p>{p}</p>)}</blockquote>
+          <figcaption>
+            <img src={t.image} alt="" width="56" height="56" loading="lazy" />
+            <div><strong>{t.name}</strong>{t.role && <span>{t.role}</span>}</div>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </Section>
+
+  <Section title="專業文章" en="COLUMN" id="blog">
+    <div class="grid cols-3">
+      {posts.map((p) => (
+        <a class="card post" href={postUrl(p)}>
+          <img src={p.data.image} alt="" loading="lazy" />
+          <div class="body">
+            <time>{postDate(p)}</time>
+            <h3>{p.data.title}</h3>
+            <p>{p.data.description ?? ''}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+    <p class="more"><a class="btn" href="/blog/">所有文章</a></p>
+  </Section>
+
+  <Contact />
+</Base>
+
+<script>
+  const hero = document.querySelector<HTMLElement>('.hero')!;
+  const imgs = [...hero.querySelectorAll<HTMLImageElement>('.hero-circle img')];
+  const num = hero.querySelector('.hero-count b')!;
+  let i = 0;
+  if (imgs.length > 1 && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    setInterval(() => {
+      imgs[i].classList.remove('active');
+      i = (i + 1) % imgs.length;
+      imgs[i].classList.add('active');
+      num.textContent = String(i + 1);
+    }, 5000);
+  }
+</script>

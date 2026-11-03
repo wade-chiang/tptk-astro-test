@@ -1,0 +1,7 @@
+/services/b/ /services/ 301
+/portfolio/c/ /portfolio/ 301
+/team/d/ /team/ 301
+/videos/a/ /videos/ 301
+/author/* /blog/ 301
+/categories/ / 301
+/tags/ / 301
